@@ -4,14 +4,11 @@
  * https://github.com/hamedasemi/lit-element-router
  * https://www.npmjs.com/package/lit-element-router
  */
-import { LitElement, html } from "lit-element";
-import {
-  execute,
-  nodes,
-  MinimizedFlowGraph
-} from "@tokens-studio/graph-engine";
+import { LitElement, html } from "lit";
+import { property } from "lit/decorators.js";
 
-// import Button from "../graphs/Button";
+import inputGraph from "./Button.json";
+import { execute, nodes } from "@tokens-studio/graph-engine";
 
 type TypeAppearance = "primary" | "secondary" | "sparkle";
 type TypeSize = "s" | "m" | "l";
@@ -32,22 +29,22 @@ class App extends LitElement {
     this.emphasis = "primary";
   }
 
-  // async connectedCallback() {
-  //   const output = await execute({
-  //     graph: Button,
-  //     nodes: nodes,
-  //     inputValues: {
-  //       appearance: this.appearance,
-  //       size: this.size,
-  //       emphasis: this.emphasis
-  //     }
-  //   });
-  //   console.log("output", output);
-  // }
+  async connectedCallback() {
+    const output = await execute({
+      graph: inputGraph,
+      nodes: nodes,
+      inputValues: {
+        appearance: this.appearance,
+        size: this.size,
+        emphasis: this.emphasis,
+      },
+    });
+    console.log("output", output);
+  }
 
   render() {
     return html` hi `;
   }
 }
 
-customElements.define("my-app1", App);
+customElements.define("my-app", App);
